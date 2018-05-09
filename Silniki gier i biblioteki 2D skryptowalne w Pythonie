@@ -1,0 +1,8 @@
+Cocos2d: framework do tworzenia gier i aplikacji graficznych. Implementacja dla Pythona działa na OS X, MS Windows i Linuksie
+Allegro: biblioteka do tworzenia gier 2D, wolna licencja zlib, wieloplatformowa
+Kivy: Pythonowy framework z opcją skryptowania we własnym języku kv. Działa na desktopie i systemach mobilnych
+Spring Engine: silnik do tworzenia gier strategii czasu rzeczywistego
+Blender Game Engine: połączenie Blendera z silnikiem gier napisanym w C++ i skryptowalnym w Pythonie
+PyGame: platforma do tworzenia gier w Pythonie w oparciu o biblioteki SDL
+Irrlicht: wieloplatformowy silnik z interfejsem w Pythonie
+Ren'Py: silnik do tworzenia powieści wizualnych
