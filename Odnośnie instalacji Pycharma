@@ -1,0 +1,4 @@
+Aby PyCharm działał potrzebny jest kompatybilny interpreter, jednym ze sposób jest pobranie pełnej wersji Pythona i wykorzystanie jej jako interpreter.
+Polecam pobrać ją ze strony: https://www.anaconda.com/download/#windows
+Jeśli wynikną jakiekolwiek problemy przesyłam poradnik jak zainstalować PyCharm wykorzystując ten sposób, oto link:
+https://www.youtube.com/watch?v=VddFrvL5CNw
