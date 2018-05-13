@@ -1,0 +1,9 @@
+wykreowanie własnej postaci (wybór koloru włosów, długości włosów, koloru oczu itp)
+przebieranie postaci
+postać musi skakać oraz poruszać się w prawo i w lewo. Brak możliwości zejścia na niższe piętro
+postać turla się zamiast chodzić w prawo i w lewo (opcjonalnie)
+możliwość wybrania planszy (opcojalnie)
+postać zbiera monety po naskoczeniu na nie co kilka pięter
+postać patrzy w kierunku w którym skacze
+postać po odpowiednim rozbiegu może przeskoczyć więcej niż jedno piętro
+postać spada, jeśli nie uda jej się wskoczyć na ani jedno piętro widoczne na planszy, co kończy grę
