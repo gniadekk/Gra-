@@ -1,0 +1,114 @@
+import pygame
+from pygame.locals import *
+from game_board import *
+ 
+class SnakeSquare(Square):
+   def __init__(self, x, y, maxx, maxy, func, board_type):
+       self.color = (0,0,0) #ustawiamy poczatkowy kolor (czarny)
+       Square.__init__(self, x, y, maxx, maxy, color, board_type) #dziedziczymy po klasie Square z game_board
+       self.func = func #dodatkowa zmienna okreslajaca funkcje pola
+ 
+   def print_square(self):
+       pygame.draw.rect(screen, self.color, Rect((self.x*20, self.y*20), (18,18))) #rysujemy za pomoca pygame kwadrat o okreslonym kolorze i pozycji na screen
+ 
+class SnakeBoard(Board):
+   def __init__(self, maxx, maxy, board_type):
+       Board.__init__(self, maxx, maxy, board_type) #dziedziczymy po kalsie Board z game_board
+ 
+   def make_board(self):
+       for x in range(self.maxx): #tworzymy plansze - liste dwuwymiarowa - o wymiarach maxx, maxy i wypelniamy ja obiktami klasy AStarSquare
+           self.board.append([])
+           for y in range(self.maxy):
+               self.board[x].append(SnakeSquare(x, y, self.maxx, self.maxy, "none", self.board_type ))
+ 
+   def set_square(self, sq_x, sq_y, func, color):
+       #metoda do ustawiania roznych funkcji dla danego pola (sq_x,sq_y)
+       sq = self.board[sq_x][sq_y] #tworzymy zmienna pomocnicza, okresla ona pole
+       sq.func = func
+       sq.color = color
+       print "setting (%d:%d) as %s" % (sq_x, sq_y, func)
+ 
+ 
+class Snake(object):
+   def __init__(self, name, body, board_handler):
+       self.board_handler = board_handler
+       self.snake_name = name
+       self.snake_color = (123,123,123)
+       self.snake_body = body
+       for body_square in body:
+           sq_x, sq_y = body_square
+           self.set_snake_body(sq_x, sq_y)
+ 
+   def set_snake_body(self, sq_x, sq_y):
+       self.board_handler.set_square(sq_x, sq_y, self.snake_name, self.snake_color)
+ 
+   def move(self, direction):
+       head = self.snake_body[-1]
+       sq_before_head = self.snake_body[-2]
+       tail = self.snake_body[0]
+       if direction == "up" and (head[1]-1 != sq_before_head[1]) and (head[1]-1 > -1):
+           self.set_snake_body(head[0], head[1]-1)
+           self.snake_body.append((head[0], head[1]-1))
+           self.board_handler.set_square(tail[0], tail[1], 'none', (0,0,0))
+           self.snake_body.remove(tail)
+ 
+       elif direction == "down" and (head[1]+1 != sq_before_head[1]) and (head[1]+1 < self.board_handler.maxy):
+           self.set_snake_body(head[0], head[1]+1)
+           self.snake_body.append((head[0], head[1]+1))
+ 
+           self.board_handler.set_square(tail[0], tail[1], 'none', (0,0,0))
+           self.snake_body.remove(tail)
+ 
+       elif direction == "left" and (head[0]-1 != sq_before_head[0]) and (head[0]-1 > -1):
+           self.set_snake_body(head[0]-1, head[1])
+           self.snake_body.append((head[0]-1, head[1]))
+ 
+           self.board_handler.set_square(tail[0], tail[1], 'none', (0,0,0))
+           self.snake_body.remove(tail)
+ 
+       elif direction == "right" and (head[0]+1 != sq_before_head[0]) and (head[0]+1 < self.board_handler.maxx):
+           self.set_snake_body(head[0]+1, head[1])
+           self.snake_body.append((head[0]+1, head[1]))
+ 
+           self.board_handler.set_square(tail[0], tail[1], 'none', (0,0,0))
+           self.snake_body.remove(tail)
+ 
+ 
+class SnakeGame(object):
+   def __init__(self):
+       self.game_board = SnakeBoard(25,25,1) #tworzymy plansze
+       self.snake = Snake('snake1', [(4,5),(4,6),(4,7)], self.game_board)
+       self.game_board.print_board() #rysujemy na ekranie
+ 
+ 
+ 
+ 
+def screen_refresh():
+   screen.fill((0, 0, 0))
+   game.game_board.print_board()
+   pygame.display.flip()
+ 
+def main():
+   pygame.init()
+   rozdzielczosc = 500, 500
+   global screen
+   screen = pygame.display.set_mode(rozdzielczosc, False, 32)
+   pygame.display.set_caption('Snake')
+   pygame.mouse.set_visible(1)
+   pygame.display.init()
+   global game
+   game = SnakeGame()
+   screen_refresh()
+   while True:
+       for event in pygame.event.get():
+           if event.type == QUIT: exit()
+           if event.type == pygame.KEYDOWN:
+               if event.key == K_ESCAPE: exit()
+               if event.key == K_UP: game.snake.move('up')
+               if event.key == K_DOWN: game.snake.move('down')
+               if event.key == K_LEFT: game.snake.move('left')
+               if event.key == K_RIGHT: game.snake.move('right')
+               screen_refresh()
+ 
+if __name__ == "__main__":
+   main()
