@@ -1,0 +1,14 @@
+def menu():
+    print("Welcome, \n 1. Continue \n 2. New game \n 3. Create your character \n 4. Settings\n")
+    choice = input()
+    
+    if choice == "1":
+    
+    
+    if choice == "2":
+    
+    
+    if choice == "3":
+    
+    
+    if choice == "4":
