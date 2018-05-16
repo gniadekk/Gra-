@@ -1,0 +1,26 @@
+def Energy(Q):
+    starting_energy=0
+    for i in range(len(Q)):
+        for j in range(len(Q)):
+            g=Q[i,j]
+            n_y=Q[(i+1)%num,j]+Q[i,(j+1)%num]+Q[(i-1)%num,j]+Q[i,(j-1)%num]
+            starting_energy+=g*-n_y
+    return starting_energy/4
+    
+    def montestep(Q,P):
+    for i in range(num):
+        for j in range(num):
+                x=rnd.randint(0,num)
+                y=rnd.randint(0,num)
+                z=Q[x,y]
+                n_y=Q[(x+1)%num,y]+Q[x,(y+1)%num]+Q[(x-1)%num,y]+Q[x,(y-1)%num]
+                l=2*z*n_y
+                if l<0:
+                    z*=-1
+                elif rnd.rand()<np.exp(P*-l):
+                    z*=-1
+                Q[x,y]=z
+    return Q
+    def Magnetization(Q):
+    magnetization=np.sum(Q)
+    return magnetization
