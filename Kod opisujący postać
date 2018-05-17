@@ -5,7 +5,7 @@ def Energy(Q):
             g=Q[i,j]
             n_y=Q[(i+1)%num,j]+Q[i,(j+1)%num]+Q[(i-1)%num,j]+Q[i,(j-1)%num]
             starting_energy+=g*-n_y
-    return starting_energy/4
+    return starting_energy/3
     
     def montestep(Q,P):
     for i in range(num):
