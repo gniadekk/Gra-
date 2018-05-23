@@ -41,3 +41,9 @@ gameO = RECTA(50, 200, 550, 600)
 icyPic = RECTA(0, 0, 600, 800)
 startPlay = RECTA(150, 170, 450, 270)
 exitGame = RECTA(150, 50, 450, 150)
+
+moveX = 0
+playerLeft = 200
+playerRight = 230
+playerBottom = 0
+player = RECTA(playerLeft, playerBottom, playerRight, playerBottom + 60)
