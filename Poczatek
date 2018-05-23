@@ -1,0 +1,43 @@
+from OpenGL.GL import *
+from OpenGL.GLU import *
+from OpenGL.GLUT import *
+import random
+import sys
+from PIL import Image
+from PIL.Image import *
+#-------------------------------------------------
+
+WINDOW_WIDTH = 600
+WINDOW_HEIGHT = 800
+windowBottom = 0
+
+texNum = 7
+
+barrier_width = 150
+barrier_hieght = 30
+
+dTime = 0.2
+j = False
+iyVelocity = 55
+yVelocity = iyVelocity
+onBar = False
+
+time_interval = 10  # try  2,5,7 msec
+gameStart = False
+
+class RECTA:
+    def __init__(self, left, bottom, right, top):
+        self.left = left
+        self.bottom = bottom
+        self.right = right
+        self.top = top
+
+randList = []
+for i in range(0, 100):
+    randList.append(random.randrange(0, WINDOW_WIDTH - barrier_width, 1))
+
+wall = RECTA(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
+gameO = RECTA(50, 200, 550, 600)
+icyPic = RECTA(0, 0, 600, 800)
+startPlay = RECTA(150, 170, 450, 270)
+exitGame = RECTA(150, 50, 450, 150)
