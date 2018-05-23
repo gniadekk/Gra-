@@ -60,3 +60,13 @@ def LoadBarriersTexture():
     ix = image.size[0]
     iy = image.size[1]
     image = image.tobytes("raw", "RGBA", 0, -1)
+    
+     # Create Texture
+    BarsTexture = glGenTextures(texNum)
+    glBindTexture(GL_TEXTURE_2D, int(BarsTexture[0]))   # 2d texture (x and y size)
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
