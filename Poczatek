@@ -35,6 +35,7 @@ class RECTA:
 randList = []
 for i in range(0, 100):
     randList.append(random.randrange(0, WINDOW_WIDTH - barrier_width, 1))
+    
 
 wall = RECTA(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
 gameO = RECTA(50, 200, 550, 600)
