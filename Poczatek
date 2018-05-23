@@ -47,3 +47,6 @@ playerLeft = 200
 playerRight = 230
 playerBottom = 0
 player = RECTA(playerLeft, playerBottom, playerRight, playerBottom + 60)
+
+ixVelocity = 2
+xVelocity = ixVelocity
