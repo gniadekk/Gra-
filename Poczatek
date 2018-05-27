@@ -4,7 +4,7 @@ from OpenGL.GLUT import *
 import random
 import sys
 from PIL import Image
-from PIL.Image import *
+from PIL.Image import * 
 #-------------------------------------------------
 
 WINDOW_WIDTH = 600
