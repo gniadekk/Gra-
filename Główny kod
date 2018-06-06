@@ -1,0 +1,242 @@
+from OpenGL.GL import *
+from OpenGL.GLU import *
+from OpenGL.GLUT import *
+import random
+import sys
+from PIL import Image
+from PIL.Image import * 
+#-------------------------------------------------
+
+WINDOW_WIDTH = 600
+WINDOW_HEIGHT = 800
+windowBottom = 0
+
+texNum = 7
+
+barrier_width = 150
+barrier_hieght = 30
+
+dTime = 0.2
+j = False
+iyVelocity = 55
+yVelocity = iyVelocity
+onBar = False
+
+time_interval = 10  # try  2,5,7 msec
+gameStart = False
+
+class RECTA:
+    def __init__(self, left, bottom, right, top):
+        self.left = left
+        self.bottom = bottom
+        self.right = right
+        self.top = top
+
+randList = []
+for i in range(0, 100):
+    randList.append(random.randrange(0, WINDOW_WIDTH - barrier_width, 1))
+    
+
+wall = RECTA(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
+gameO = RECTA(50, 200, 550, 600)
+icyPic = RECTA(0, 0, 600, 800)
+startPlay = RECTA(150, 170, 450, 270)
+exitGame = RECTA(150, 50, 450, 150)
+
+moveX = 0
+playerLeft = 200
+playerRight = 230
+playerBottom = 0
+player = RECTA(playerLeft, playerBottom, playerRight, playerBottom + 60)
+
+ixVelocity = 2
+xVelocity = ixVelocity
+
+incs = False
+
+def LoadBarriersTexture():
+    global BarsTexture
+    image = open("icy2.png")
+    
+    ix = image.size[0]
+    iy = image.size[1]
+    image = image.tobytes("raw", "RGBA", 0, -1)
+    
+     # Create Texture
+    BarsTexture = glGenTextures(texNum)
+    glBindTexture(GL_TEXTURE_2D, int(BarsTexture[0]))   # 2d texture (x and y size)
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+    
+    man = "icyMan1.png"
+right = False
+def LoadIcymanTexture():
+    global manTexture, man, right
+    if keystates[1]:
+        man = "icyMan2.png"
+        right = True
+        if right:
+            man = "icyMan3.png"
+            right = False
+
+image = open(man)
+    
+    ix = image.size[0]
+    iy = image.size[1]
+    image = image.tobytes("raw", "RGBA", 0, -1)
+    
+    # Create Texture
+    manTexture = glGenTextures(texNum)
+    glBindTexture(GL_TEXTURE_2D, int(manTexture[1]))   # 2d texture (x and y size)
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, 4, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+
+
+def LoadBackgroundTexture():
+    global bkgTexture
+    image = open("bk3.png")
+    
+    ix = image.size[0]
+    iy = image.size[1]
+    image = image.tobytes("raw", "RGBA", 0, -1)
+    
+    # Create Texture
+    bkgTexture = glGenTextures(texNum)
+    glBindTexture(GL_TEXTURE_2D, int(bkgTexture[2]))   # 2d texture (x and y size)
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+
+
+def LoadGameoverTexture():
+    global gameOverTexture
+    image = open("gameover.png")
+    
+    ix = image.size[0]
+    iy = image.size[1]
+    image = image.tobytes("raw", "RGBA", 0, -1)
+    
+    # Create Texture
+    gameOverTexture = glGenTextures(texNum)
+    glBindTexture(GL_TEXTURE_2D, int(gameOverTexture[3]))   # 2d texture (x and y size)
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+
+def LoadBeginTexture():
+    global BeginTexture
+    image = open("icyT.png")
+    
+    ix = image.size[0]
+    iy = image.size[1]
+    image = image.tobytes("raw", "RGBA", 0, -1)
+    
+    # Create Texture
+    BeginTexture = glGenTextures(texNum)
+    glBindTexture(GL_TEXTURE_2D, int(BeginTexture[4]))   # 2d texture (x and y size)
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+
+
+def LoadStartTexture():
+    global startPlayTexture
+    image = open("startPlay.png")
+    
+    ix = image.size[0]
+    iy = image.size[1]
+    image = image.tobytes("raw", "RGBA", 0, -1)
+    
+    # Create Texture
+    startPlayTexture = glGenTextures(texNum)
+    glBindTexture(GL_TEXTURE_2D, int(startPlayTexture[5]))   # 2d texture (x and y size)
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+
+
+def LoadExitTexture():
+    global exitTexture
+    image = open("exitGame.png")
+    
+    ix = image.size[0]
+    iy = image.size[1]
+    image = image.tobytes("raw", "RGBA", 0, -1)
+    
+    # Create Texture
+    exitTexture = glGenTextures(texNum)
+    glBindTexture(GL_TEXTURE_2D, int(exitTexture[6]))   # 2d texture (x and y size)
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL)
+
+# Initialization
+def init():
+    global windowBottom
+    LoadBarriersTexture()
+    LoadIcymanTexture()
+    LoadBackgroundTexture()
+    LoadGameoverTexture()
+    LoadBeginTexture()
+    LoadStartTexture()
+    LoadExitTexture()
+    glEnable(GL_TEXTURE_2D)
+    glClearColor(0.0, 0.0, 0.0, 0.0)
+
+    glShadeModel(GL_SMOOTH)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    glOrtho(0, WINDOW_WIDTH, windowBottom, windowBottom + WINDOW_HEIGHT, 0, 1)  # l,r,b,t,n,f
+
+    glMatrixMode(GL_MODELVIEW)
