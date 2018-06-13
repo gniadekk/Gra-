@@ -1,4 +1,8 @@
-Gra toczy się w wieży. Postać skacze po piętrach do góry wpsinając się na kolejne poziomy. Postać sterujemy strzałkami, skaczemy spacją. 
+
+Gracz rozpoczyna grę na parterze wieży, wewnątrz której postać gracza może biec oraz wykonywać skoki ze stopnia (tzw. schodka) 
+na stopień. Swobodę postaci ograniczają dwie ściany wieży oraz półprzepuszczalna budowa schodków, które można przenikać jedynie 
+od spodu. Gdy postać przekroczy górną krawędź ekranu, ten podąży za nią tak, aby pozostała ona w jego obrębie.
+Postacią sterujemy za pomocą strzałek, skaczemy spacją. 
 Postać możemy również przebierać. Po zebraniu odpowiedniej ilości monet (rozmieszczonych na poszczególnych piętrach) możemy odblokować 
 kolejne wieże. Jeśli odpowiednio się rozpędzimy, postać będzie odbijała się od ściany i przeskakiwała więcej niż jedno pięro wykonując tzw. 
-combo. Co sto pięter zmieniają się schodki.  
+combo. Co sto pięter zmienia się wygląd schodków.  
