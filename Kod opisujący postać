@@ -21,6 +21,7 @@ def Energy(Q):
                     z*=-1
                 Q[x,y]=z
     return Q
+    
     def Magnetization(Q):
     magnetization=np.sum(Q)
     return magnetization
