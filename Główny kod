@@ -141,8 +141,7 @@ def LoadGameoverTexture():
     
     # Create Texture
     gameOverTexture = glGenTextures(texNum)
-    glBindTexture(GL_TEXTURE_2D, int(gameOverTexture[3]))   # 2d texture (x and y size)
-    
+    glBindTexture(GL_TEXTURE_2D, int(gameOverTexture[3]))   # 2d texture (x and y size)    
     
     glPixelStorei(GL_UNPACK_ALIGNMENT,1)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, image)
