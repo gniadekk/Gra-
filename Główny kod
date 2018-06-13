@@ -39,7 +39,7 @@ for i in range(0, 100):
 
 wall = RECTA(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
 gameO = RECTA(50, 200, 550, 600)
-icyPic = RECTA(0, 0, 600, 800)
+icyPic = RECTA(0, 0,  600, 800)
 startPlay = RECTA(150, 170, 450, 270)
 exitGame = RECTA(150, 50, 450, 150)
 
