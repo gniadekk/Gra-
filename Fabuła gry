@@ -4,5 +4,10 @@ na stopień. Swobodę postaci ograniczają dwie ściany wieży oraz półprzepus
 od spodu. Gdy postać przekroczy górną krawędź ekranu, ten podąży za nią tak, aby pozostała ona w jego obrębie.
 Postacią sterujemy za pomocą strzałek, skaczemy spacją. 
 Postać możemy również przebierać. Po zebraniu odpowiedniej ilości monet (rozmieszczonych na poszczególnych piętrach) możemy odblokować 
-kolejne wieże. Jeśli odpowiednio się rozpędzimy, postać będzie odbijała się od ściany i przeskakiwała więcej niż jedno pięro wykonując tzw. 
+kolejne wieże. 
+Celem gracza jest zdobycie jak najwyższego piętra oraz uzyskanie jak najwyższej liczby punktów. 
+Punkty przyznawane są za każde osiągnięte piętro oraz za widowiskowość samych skoków. Fizykę gry opisują dwie reguły:
+1) Im większej prędkości postać nabierze przed skokiem, tym ów skok będzie wyższy.
+2) Prędkość (i zarazem kierunek) poruszania się postaci można zmieniać także podczas skoku.
+Jeśli odpowiednio się rozpędzimy, postać będzie odbijała się od ściany i przeskakiwała więcej niż jedno pięro wykonując tzw. 
 combo. Co sto pięter zmienia się wygląd schodków.  
